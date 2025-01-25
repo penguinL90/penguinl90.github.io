@@ -30,7 +30,7 @@ jobs:
         git config --global user.email "actions@github.com"
         git checkout --orphan gh-pages
         git rm -rf .
-        cp output/wwwroot/* .
+        cp -r output/wwwroot/* .
         touch .nojekyll
         git add .
         git commit -m "Auto commit by GitHub Pages"
