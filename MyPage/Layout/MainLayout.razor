@@ -1,3 +1,69 @@
 ﻿@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
 
-@Body
+<div>
+  <nav class="navbar navbar-expand-sm py-4" 
+       style="background-color: #45616A">
+    <div class="container-fluid">
+      <div class="navbar-brand">@(string.IsNullOrEmpty(title) ? "penguinL90 - 404" : title)</div>
+      <button class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navcolcont">
+        <span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navcolcont">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/">主頁</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle"
+               href="#" 
+               id="navbarDropdown" 
+               role="button" 
+               data-bs-toggle="dropdown" 
+               aria-expanded="false">座位系統</a>
+            <ul class="dropdown-menu">
+              <li><a href="seating-system/selector" class="dropdown-item">座位選擇器</a></li>
+              <li><a href="seating-system/distributor" class="dropdown-item">座位分配器</a></li>
+              <li><a href="seating-system/urigenerator" class="dropdown-item">網址生成器</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<CascadingValue Value="this">
+  @Body
+</CascadingValue>
+
+<footer style="background-color: #45616A; bottom: 0; height: 7.5rem;">
+  <div class="container h-100 d-flex flex-column justify-content-around">
+    <p class="text-center m-0">
+      2025 penguinL90
+    </p>
+    <p class="text-center m-0">
+      GitHub - <a href="">penguinL90</a>
+    </p>
+  </div>
+</footer>
+
+@code {
+    private string _title;
+    public string title 
+    {
+        get => _title;
+        set
+        {
+            if (_title == value) return;
+            _title = value;
+            StateHasChanged();
+        }
+    }
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+}

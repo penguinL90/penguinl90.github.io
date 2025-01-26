@@ -1,7 +1,113 @@
 ﻿@page "/"
+@inherits PageBase
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3 p-4">
+      <div class="card">
+        <img class="card-img-top p-4" id="img1" src="img/mainpageimg.png" />
+        <div class="card-body p-4">
+          <p class="card-text font-monospace">嗨嗨:D 歡迎來到我的網頁</p>
+          <p class="card-text font-monospace">
+            這裡是一隻不太會寫程式、沒有美感的企鵝
+            <br />
+            致力於做一些沒什麼卵用的工具
+            <br />
+            如座位分配系統、點點字生成器
+            <br />
+            如果您覺得這些有點用處的話
+            <br />
+            我會很感謝您的*(੭*ˊᵕˋ)੭*ଘ
+          </p>
+        </div>
+      </div>   
+    </div>
+    <div class="col-md-9 p-4">
+      <h4 class="mb-4">實用工具們</h4>
+      <div class="container">
+        <div class="row row-cols-md-2">
+          <div class="col-md p-4">
+            <div class="card h-100">
+              <img class="card-img-top p-4 pb-1" 
+                   style="aspect-ratio: 1.5" 
+                   src="img/mainpageimg.png" />
+              <div class="card-body p-4">
+                <h5 class="card-title font-monospace">座位系統</h5>
+                <p class="card-text font-monospace">
+                  一個可以製作、供他人填寫、生成座位表的工具。
+                  <br />
+                  採用視覺化操作並搭配嵌入Google表單，簡易上手。
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md p-4">
+            <div class="card h-100">
+              <img class="card-img-top p-4 pb-1" 
+                   style="aspect-ratio: 1.5" 
+                   src="img/mainpageimg.png" />
+              <div class="card-body p-4">
+                <h5 class="card-title font-monospace">
+                  點點字生成器
+                </h5>
+                <p class="card-text font-monospace">
+                  一個可以能將圖片轉換成盲人點字的小工具。
+                  <br />
+                  有網頁版及桌面版(Windows)
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md p-4">
+            <div class="card h-100">
+              <img class="card-img-top p-4 pb-1" 
+                   style="aspect-ratio: 1.5" 
+                   src="img/mainpageimg.png" />
+              <div class="card-body p-4">
+                <h5 class="card-title font-monospace">
+                  音樂撥放器 (GitHub)
+                </h5>
+                <p class="card-text font-monospace">
+                  一個簡易的音樂撥放器。
+                  <br />
+                  使用WinUI(ver 0.1.*)、
+                  <br />
+                  WPF(ver 0.0.*)製作
+                  <br/>
+                  故只能使用於Windows平台
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md p-4">
+            <div class="card h-100">
+              <img class="card-img-top p-4 pb-1" 
+                   style="aspect-ratio: 1.5" 
+                   src="img/mainpageimg.png" />
+              <div class="card-body p-4">
+                <h5 class="card-title font-monospace">桌面模擬器 (GitHub)</h5>
+                <p class="card-text font-monospace">
+                  一個能夠模擬桌面，使上面圖示做奇怪運動的工具。
+                  <br />
+                  使用WPF製作
+                  <br />
+                  故只能使用於Windows平台
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  
+</div>
 
-Welcome to your new app.
+@code {
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        mainLayout.title = "penguinL90 - 主頁";
+    }
+}

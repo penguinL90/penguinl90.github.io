@@ -1,0 +1,23 @@
+﻿@page "/seating-system/{PageName?}/{Param?}"
+@inherits PageBase
+
+@code {
+    [Parameter]
+    public string? PageName { get; set; } = "";
+    [Parameter]
+    public string? Param { get; set; } = "";
+
+    private string ShowPageName => (PageName) switch
+    {
+        "selector" => "座位選擇器",
+        "distributor" => "座位分配器",
+        "urigenerator" => "網址生成器",
+        _ => ""
+    };
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        mainLayout.title = "座位系統" + (string.IsNullOrEmpty(PageName) ? "" : $" - {ShowPageName}");
+    }
+}
