@@ -32,6 +32,7 @@ jobs:
         git rm -rf .
         cp -r output/wwwroot/index.html output/wwwroot/404.html
         cp -r output/wwwroot/* .
+        rm -r output
         touch .nojekyll
         git add .
         git commit -m "Auto commit by GitHub Pages"
