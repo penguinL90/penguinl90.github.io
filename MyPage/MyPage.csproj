@@ -4,13 +4,22 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	<CompressionEnabled>false</CompressionEnabled>
+
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\img\cursoroverlay.svg" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Remove="Images\mainpageimg.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="wwwroot\img\cursoroverlay.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="wwwroot\img\mainpageimg.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -19,11 +28,12 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.1" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="9.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Images\" />
-    <Folder Include="Models\" />
+    <Folder Include="Models\DWGE\" />
   </ItemGroup>
 
 </Project>

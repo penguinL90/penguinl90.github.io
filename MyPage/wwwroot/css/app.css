@@ -86,3 +86,16 @@ code {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
     text-align: start;
 }
+
+.hovereffect {
+    transition: transform 0.2s;
+}
+
+    .hovereffect:hover {
+        transform: scale(1.025);
+    }
+
+.cursor-effect {
+    position: relative;
+    overflow: hidden;
+}

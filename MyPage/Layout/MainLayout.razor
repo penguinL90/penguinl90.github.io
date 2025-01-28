@@ -1,9 +1,9 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
 
-<div>
-  <nav class="navbar navbar-expand-sm py-4" 
-       style="background-color: #45616A">
+<header>
+  <nav class="navbar navbar-expand-sm py-4 font-monospace"
+       style="background-color: #45616A; top: -1px">
     <div class="container-fluid">
       <div class="navbar-brand">@(string.IsNullOrEmpty(title) ? "penguinL90 - 404" : title)</div>
       <button class="navbar-toggler"
@@ -29,23 +29,26 @@
               <li><a href="seating-system/urigenerator" class="dropdown-item">網址生成器</a></li>
             </ul>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/dotword-generator">點點字生成器</a>
+          </li>
         </ul>
       </div>
     </div>
   </nav>
-</div>
+</header>
 
 <CascadingValue Value="this">
   @Body
 </CascadingValue>
 
-<footer style="background-color: #45616A; bottom: 0; height: 7.5rem;">
-  <div class="container h-100 d-flex flex-column justify-content-around">
+<footer class="font-monospace" style="background-color: #45616A; bottom: 0; height: 7.5rem;">
+  <div class="container h-100 d-flex flex-column justify-content-evenly">
     <p class="text-center m-0">
       2025 penguinL90
     </p>
     <p class="text-center m-0">
-      GitHub - <a href="">penguinL90</a>
+      GitHub - <a href="https://github.com/penguinL90">penguinL90</a>
     </p>
   </div>
 </footer>

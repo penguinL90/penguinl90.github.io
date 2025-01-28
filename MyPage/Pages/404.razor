@@ -1,0 +1,28 @@
+﻿<div class="border">
+    <h2>@s</h2>
+</div>
+
+@code {
+    string s = "";
+    List<string> wtf =
+    ["酷欸 我也不知道這裡有什麼",
+    "你知道404嗎",
+    "這裡什麼都沒有ㄟ",
+    "CSS很難 但是沒有找到你想要的網頁難",
+    "偷偷跟你說 我這陣列變數名稱是wtf",
+    "HTTP 404 இ௰இ",
+    "我找不到QaQ",
+    "我喜歡......必歐-沙伐定律*(੭*ˊᵕˋ)੭*ଘ",
+    "CS8618我婆ฅʕ•̫͡•ʔฅ",
+    "載流長直導線磁場公式 B = u0 I /2 pi R",
+    "真空磁導率 4*pi*10^-7",
+    "使出迴路定則 對於一坨電線似乎沒有什麼作用",
+    "碳鋅電池的二氧化錳是去極劑"];
+
+
+    protected override void OnInitialized()
+    {
+        Random rnd = new();
+        s = wtf[rnd.Next(0, wtf.Count)];
+    }
+}

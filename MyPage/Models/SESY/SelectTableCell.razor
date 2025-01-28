@@ -1,0 +1,104 @@
+﻿@* Select Table in Seating System ver-3 *@
+
+@implements IDisposable
+
+<div class="font-monospace cell @CssClass1 @CssClass2" @onclick="OnClick">
+    <p class="font-monospace">
+        @Seat.Row @Seat.Column
+    </p>
+    <div class="ani-container" id="@($"Ani-{Seat}")">
+        <span class="@newspan">@newtxt</span>
+        <span class="@oldspan">@oldtxt</span>
+    </div>
+</div>
+
+@code {
+    [CascadingParameter]
+    private SelectTable selectTable { get; set; }
+
+    [Parameter]
+    public SelectSeat Seat { get; set; }
+
+    private bool IsChosen { get; set; }
+
+    private string CssClass1 { get; set; } = "";
+
+    private string CssClass2 { get; set; } = "";
+
+
+    private string oldtxt = "";
+
+    private string newtxt = "";
+
+    private string oldspan = "";
+
+    private string newspan = "";
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        if (Seat.IsForbidden) 
+        {
+            CssClass1 = "deactived";
+            AnimateTextChange("禁用");
+            return;
+        }
+        CssClass1 = "actived";
+        AnimateTextChange("選擇");
+        selectTable.CellUpdateEvent += OnCellUpdate;
+        selectTable.ReverseGenerateCallEvent += OnReverseGenerateCall;
+    }
+
+    private void OnCellUpdate(object? sender, List<SelectSeat> e)
+    {
+        int index = e.IndexOf(Seat);
+        if (index == -1) 
+        {
+            IsChosen = false;
+            CssClass2 = "";
+            AnimateTextChange("選擇"); 
+        }
+        else 
+        {
+            IsChosen = true;
+            CssClass2 = "chose";
+            AnimateTextChange((index + 1).ToString());
+        }
+        StateHasChanged();
+    }
+
+    private void OnClick() 
+    {
+        if (Seat.IsForbidden) return;
+        if (IsChosen) 
+            selectTable.RemoveCell(Seat);
+        else 
+            selectTable.AddCell(Seat);
+    }
+
+    public void Dispose() 
+    {
+        selectTable.CellUpdateEvent -= OnCellUpdate;
+        selectTable.ReverseGenerateCallEvent -= OnReverseGenerateCall;
+    }
+
+    private void AnimateTextChange(string txt) 
+    {
+        (string, string) css = 
+            (IsChosen) 
+            ? ("popout-up", "popin-down") 
+            : ("popout-down", "popin-up");
+        oldtxt = newtxt;
+        newtxt = txt;
+        oldspan = css.Item1;
+        newspan = css.Item2;
+    }
+
+    private void OnReverseGenerateCall(object? sender, SeatBase e)
+    {
+        if (e == Seat)
+        {
+            selectTable.AddCell(Seat);
+        }
+    }
+}

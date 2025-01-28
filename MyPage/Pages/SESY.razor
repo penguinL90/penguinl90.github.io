@@ -1,6 +1,23 @@
 ﻿@page "/seating-system/{PageName?}/{Param?}"
 @inherits PageBase
 
+@{
+    switch (PageName) {
+        case "selector":
+            <SESYSelector Param="@Param"></SESYSelector>
+            break;
+        case "distributor":
+            <SESYGenerator></SESYGenerator>
+            break;
+        case "urigenerator":
+            <SESYUrigenerator></SESYUrigenerator>
+            break;
+        case null:
+            <SESYIntro></SESYIntro>
+            break;
+    }
+}
+
 @code {
     [Parameter]
     public string? PageName { get; set; } = "";

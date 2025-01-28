@@ -1,5 +1,115 @@
-﻿<h3>SESYSelector</h3>
+﻿@* Select Table in Seating System ver-3 *@
+
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+
+<PageTitle>座位系統 - 座位選擇器</PageTitle>
+
+<div class="container d-flex justify-content-center flex-column">
+    <h5 class="font-monospace text-center m-4">
+        Step 1.
+        <br />
+        在座位表上選擇自己想要的座位志願序。
+    </h5>
+    <SelectTable
+    Row="row"
+    Column="column" 
+    SendGenerateFunc="RecieveGenerateFunc"
+    ForbiddenSeatListString="@forbiddenSeatString">
+    </SelectTable>
+
+    <h5 class="font-monospace text-center m-4">
+        Step 2.
+        <br />
+        按下生成按鈕，系統會自動複製結果至剪貼簿。
+    </h5>
+
+    <div class="summonbtngroup mx-auto">
+        <div class="button" @onclick="_Generate"><p>生成</p></div>
+        <div class="button" @onclick="_ReverseGenerate"><p>反生成</p></div>
+    </div>
+
+    <h5 class="font-monospace text-center m-4">
+        Step 3.
+        <br />
+        將結果貼至Google表單內。
+    </h5>
+
+
+    <textarea class="resultstr font-monospace mx-auto" @bind="ResultString"></textarea>
+
+
+    @{
+        if (string.IsNullOrEmpty(frameuri))
+        {
+            <div class="frame mx-auto">
+                <_404></_404>
+            </div>
+        }
+        else
+        {
+            <iframe class="frame mx-auto"
+            src="@frameuri"
+            frameborder="0"
+            marginheight="0"
+            marginwidth="0">
+                載入中…
+            </iframe>
+        }
+    }
+
+</div>
+
 
 @code {
+    private Action<string> ReverseGenerate;
+    private Func<string?> Generate;
 
+    private int row = 6;
+    private int column = 6;
+    private string frameuri;
+    private string forbiddenSeatString;
+    private string ResultString;
+    [Parameter]
+    public string Param { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        QueryParse();
+    }
+
+    private void RecieveGenerateFunc(Func<string?> generate, Action<string> reverseGenerate)
+    {
+        Generate = generate;
+        ReverseGenerate = reverseGenerate;
+    }
+
+    private void _Generate()
+    {
+        string? txt = Generate();
+        if (txt == null) return;
+        ResultString = txt;
+        JsRuntime.InvokeVoidAsync("copytoclipboard", txt);
+    }
+
+    private void _ReverseGenerate()
+    {
+        ReverseGenerate(ResultString);
+    }
+
+    private void QueryParse()
+    {
+        if (string.IsNullOrEmpty(Param)) return;
+        string param = Encoding.UTF8.GetString(Convert.FromBase64String(Param));
+        JsonObject jsoparam = JsonNode.Parse(param)!.AsObject();
+        if (!(jsoparam.TryGetPropertyValue("Row", out JsonNode? jsonRow) && jsonRow!.AsValue().TryGetValue<int>(out row)))
+            row = 6;
+        if (!(jsoparam.TryGetPropertyValue("Col", out JsonNode? jsonCol) && jsonCol!.AsValue().TryGetValue<int>(out column)))
+            column = 6;
+        if (!(jsoparam.TryGetPropertyValue("Fru", out JsonNode? jsonFru) && jsonFru!.AsValue().TryGetValue<string>(out frameuri)))
+            frameuri = "";
+        if (!(jsoparam.TryGetPropertyValue("Fss", out JsonNode? jsonFss) && jsonFss!.AsValue().TryGetValue<string>(out forbiddenSeatString)))
+            forbiddenSeatString = "";
+    }
 }

@@ -1,12 +1,13 @@
 ﻿@page "/"
 @inherits PageBase
+@inject IJSRuntime JsRuntime
 
-<PageTitle>Home</PageTitle>
+<PageTitle>penguinL90 - 主頁</PageTitle>
 
 <div class="container">
   <div class="row">
     <div class="col-md-3 p-4">
-      <div class="card">
+      <div class="card cursor-effect">
         <img class="card-img-top p-4" id="img1" src="img/mainpageimg.png" />
         <div class="card-body p-4">
           <p class="card-text font-monospace">嗨嗨:D 歡迎來到我的網頁</p>
@@ -27,28 +28,29 @@
     <div class="col-md-9 p-4">
       <h4 class="mb-4">實用工具們</h4>
       <div class="container">
-        <div class="row row-cols-md-2">
+        <div class="row row-cols-md-2 g-md-2">
           <div class="col-md p-4">
-            <div class="card h-100">
+            <div class="card h-100 user-select-none cursor-effect">
               <img class="card-img-top p-4 pb-1" 
                    style="aspect-ratio: 1.5" 
                    src="img/mainpageimg.png" />
-              <div class="card-body p-4">
+              <div class="card-body p-4 d-flex flex-column">
                 <h5 class="card-title font-monospace">座位系統</h5>
                 <p class="card-text font-monospace">
                   一個可以製作、供他人填寫、生成座位表的工具。
                   <br />
                   採用視覺化操作並搭配嵌入Google表單，簡易上手。
                 </p>
+                <a href="/seating-system" role="button" class="btn btn-outline-secondary align-self-end mt-auto">前往</a>
               </div>
             </div>
           </div>
           <div class="col-md p-4">
-            <div class="card h-100">
+            <div class="card h-100 user-select-none cursor-effect">
               <img class="card-img-top p-4 pb-1" 
                    style="aspect-ratio: 1.5" 
                    src="img/mainpageimg.png" />
-              <div class="card-body p-4">
+              <div class="card-body p-4 d-flex flex-column">
                 <h5 class="card-title font-monospace">
                   點點字生成器
                 </h5>
@@ -57,15 +59,19 @@
                   <br />
                   有網頁版及桌面版(Windows)
                 </p>
+                <div class="d-flex align-self-end mt-auto w-auto">
+                    <a href="/seating-system" role="button" class="btn btn-outline-secondary me-2">網頁版</a>
+                    <a href="/seating-system" role="button" class="btn btn-outline-secondary ms-2">桌面版</a>
+                </div>
               </div>
             </div>
           </div>
           <div class="col-md p-4">
-            <div class="card h-100">
+            <div class="card h-100 user-select-none cursor-effect">
               <img class="card-img-top p-4 pb-1" 
                    style="aspect-ratio: 1.5" 
                    src="img/mainpageimg.png" />
-              <div class="card-body p-4">
+              <div class="card-body p-4 d-flex flex-column">
                 <h5 class="card-title font-monospace">
                   音樂撥放器 (GitHub)
                 </h5>
@@ -73,20 +79,20 @@
                   一個簡易的音樂撥放器。
                   <br />
                   使用WinUI(ver 0.1.*)、
-                  <br />
                   WPF(ver 0.0.*)製作
                   <br/>
                   故只能使用於Windows平台
                 </p>
+                <a href="/seating-system" role="button" class="btn btn-outline-secondary align-self-end mt-auto">前往</a>
               </div>
             </div>
           </div>
           <div class="col-md p-4">
-            <div class="card h-100">
+            <div class="card h-100 user-select-none cursor-effect">
               <img class="card-img-top p-4 pb-1" 
                    style="aspect-ratio: 1.5" 
                    src="img/mainpageimg.png" />
-              <div class="card-body p-4">
+              <div class="card-body p-4 d-flex flex-column">
                 <h5 class="card-title font-monospace">桌面模擬器 (GitHub)</h5>
                 <p class="card-text font-monospace">
                   一個能夠模擬桌面，使上面圖示做奇怪運動的工具。
@@ -95,13 +101,14 @@
                   <br />
                   故只能使用於Windows平台
                 </p>
+                <a href="/seating-system" role="button" class="btn btn-outline-secondary align-self-end mt-auto">前往</a>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>  
+  </div>
 </div>
 
 @code {
@@ -109,5 +116,14 @@
     {
         base.OnInitialized();
         mainLayout.title = "penguinL90 - 主頁";
+        //JsRuntime.InvokeVoidAsync("setup_cursoreffect");
     }
+  protected override void OnAfterRender(bool firstRender)
+  {
+    base.OnAfterRender(firstRender);
+    if (firstRender)
+    {
+      JsRuntime.InvokeVoidAsync("setup_cursoreffect");
+    }
+  }
 }

@@ -1,0 +1,120 @@
+﻿.p {
+    text-align: center;
+}
+
+.button {
+    aspect-ratio: 2;
+    background-color: #45616A;
+    align-content: center;
+    transition: background-color 0.1s, transform 0.2s;
+    grid-row: 1;
+}
+
+    .button p {
+        text-align: center;
+        margin: auto;
+        font-weight: 800;
+        user-select: none;
+    }
+
+    .button:active {
+        background-color: #3E574F;
+    }
+
+.resultstr {
+    border: 1px solid;
+    text-align: center;
+    overflow-y: auto;
+    overflow-wrap: anywhere;
+    scrollbar-width: none;
+    -webkit-align-content: center;
+    align-content: center;
+    background-color: transparent;
+    resize: none;
+    display: block;
+}
+
+.frame {
+    display: block;
+    border: 1px solid;
+    overflow: hidden;
+}
+
+.summonbtngroup {
+    display: grid;
+    height: fit-content;
+    width: fit-content;
+}
+
+@media (max-width: 600.5px) {
+    .p {
+        font-size: 1rem;
+        padding: 0 5vw;
+        margin: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .button {
+        width: 5rem;
+        right: 0.25rem;
+        border-radius: 0.5rem;
+        margin: 1.5rem;
+    }
+
+        .button p {
+            font-size: 0.95rem;
+        }
+
+    .resultstr {
+        width: 90vw;
+        height: 30vh;
+        border-radius: 1rem;
+        padding: 0 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .frame {
+        width: 90vw;
+        height: 60vh;
+        margin-bottom: 1.5rem;
+        border-radius: 1rem;
+    }
+}
+
+@media (min-width: 600.5px) {
+    .p {
+        font-size: 1.4rem;
+        margin-bottom: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .button {
+        width: 7.5rem;
+        right: 0.375rem;
+        margin: 2.25rem;
+        border-radius: 0.75rem;
+    }
+
+        .button p {
+            font-size: 1.5rem;
+        }
+
+        .button:hover {
+            transform: scale(1.05);
+        }
+
+    .resultstr {
+        width: 50vw;
+        height: 20vh;
+        border-radius: 2rem;
+        padding: 0 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .frame {
+        width: 50vw;
+        height: 50vh;
+        margin-bottom: 1.5rem;
+        border-radius: 2rem;
+    }
+}

@@ -1,0 +1,143 @@
+﻿@* Select Table in Seating System ver-3 *@
+
+@inject IJSRuntime JsRuntime
+
+<div class="select-container">
+    <div class="top-col">
+        <div class="podium">
+            <p>
+                講台
+            </p>
+        </div>
+        <div class="button" @onclick="ClearCell">
+            <p>
+                清空
+            </p>
+        </div> 
+    </div>
+    <div class="table-container">
+        <table>
+            @for (int r = 1; r <= Row; ++r)
+            {
+                <tr>
+                    @for (int c = 1; c <= Column; ++c)
+                    {
+                        <td>
+                            @{
+                                SelectSeat seat = new(r, c);
+                                seat.IsForbidden = ForbiddenSeat.Contains(seat);
+                            }
+                        </td>
+                        <CascadingValue Value="this">
+                            <SelectTableCell Seat="seat">
+                            </SelectTableCell>
+                        </CascadingValue>
+                    }
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int Row { get; set; }
+    [Parameter]
+    public int Column { get; set; }
+    [Parameter]
+    public string ForbiddenSeatListString { get; set; }
+    [Parameter]
+    public Action<Func<string?>, Action<string>> SendGenerateFunc { get; set; }
+
+    private SemaphoreSlim semaphoreSlim = new(1, 1);
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        SendGenerateFunc(Generate, ReverseGenerate);
+        try 
+        {
+            ForbiddenSeat = SeatListGenerator.Parse(ForbiddenSeatListString);
+        }
+        catch
+        {
+            ForbiddenSeat = new();
+        }
+    }
+
+    public event EventHandler<List<SelectSeat>>? CellUpdateEvent;
+
+    public event EventHandler<SeatBase>? ReverseGenerateCallEvent;
+
+    private List<SelectSeat> ChosenList = new();
+    private List<SeatBase> ForbiddenSeat;
+
+    public void AddCell(SelectSeat cell)
+    {
+        if (ChosenList.Contains(cell)) return;
+        ChosenList.Add(cell);
+        CellUpdateEvent?.Invoke(this, ChosenList);
+    }
+
+    public void RemoveCell(SelectSeat cell)
+    {
+        if (ChosenList.Contains(cell))
+        {
+            ChosenList.Remove(cell);
+            CellUpdateEvent?.Invoke(this, ChosenList);
+        }
+    }
+
+    private void ClearCell() 
+    {
+        ChosenList.Clear();
+        CellUpdateEvent?.Invoke(this, ChosenList);
+    }
+
+    public async void ReverseGenerate(string txt)
+    {
+        if (semaphoreSlim.Wait(0))
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(txt)) return;
+                ClearCell();
+                await Task.Delay(200);
+                List<SeatBase> parsedList = SeatListGenerator.Parse(txt);
+                foreach (var item in parsedList)
+                {
+                    ReverseGenerateCallEvent?.Invoke(this, item);
+                    await Task.Delay(200);
+                }
+            }
+            finally
+            {
+                semaphoreSlim.Release();
+            }
+        }
+        
+    }
+
+    public string? Generate() 
+    {
+        if (semaphoreSlim.Wait(0))
+        {
+            try
+            {
+                return SeatListGenerator.Summon(ChosenList);
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                semaphoreSlim.Release();
+            }
+        }
+        else
+        {
+            return null;
+        }
+    }
+}
