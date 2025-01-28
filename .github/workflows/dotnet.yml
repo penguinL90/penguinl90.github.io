@@ -35,7 +35,7 @@ jobs:
         rm -r output
         touch .nojekyll
         git add .
-        git commit -m "Auto commit by GitHub Pages"
+        git commit -m "Auto commit by GitHub Actions"
         git push -f origin gh-pages
         
         
