@@ -40,23 +40,27 @@
             </div>
         </nav>
     </header>
+
+    <div class="body">
+        <CascadingValue Value="this">
+            @Body
+        </CascadingValue>
+    </div>
+
+    <footer class="@(IsNotScrollPage ? "fooot" : "")" style="background-color: #45616A; bottom: 0; height: 7.5rem;">
+        <div class="container h-100 d-flex flex-column justify-content-evenly">
+            <p class="text-center m-0">
+                2025 penguinL90
+            </p>
+            <p class="text-center m-0">
+                GitHub - <a href="https://github.com/penguinL90">penguinL90</a>
+            </p>
+        </div>
+    </footer>
+
 </div>
 
 
-<CascadingValue Value="this">
-    @Body
-</CascadingValue>
-
-<footer class="@(IsNotScrollPage ? "fooot" : "")" style="background-color: #45616A; bottom: 0; height: 7.5rem;">
-    <div class="container h-100 d-flex flex-column justify-content-evenly">
-        <p class="text-center m-0">
-            2025 penguinL90
-        </p>
-        <p class="text-center m-0">
-            GitHub - <a href="https://github.com/penguinL90">penguinL90</a>
-        </p>
-    </div>
-</footer>
 
 @code {
     [CascadingParameter(Name = "IsNotScrollPage")]
