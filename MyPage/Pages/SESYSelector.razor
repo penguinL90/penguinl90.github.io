@@ -6,19 +6,18 @@
 <PageTitle>座位系統 - 座位選擇器</PageTitle>
 
 <div class="container d-flex justify-content-center flex-column">
-    <h5 class="font-monospace text-center m-4">
+    <h5 class=" text-center m-4">
         Step 1.
         <br />
         在座位表上選擇自己想要的座位志願序。
     </h5>
-    <SelectTable
-    Row="row"
-    Column="column" 
-    SendGenerateFunc="RecieveGenerateFunc"
-    ForbiddenSeatListString="@forbiddenSeatString">
+    <SelectTable Row="row"
+                 Column="column" 
+                 SendGenerateFunc="RecieveGenerateFunc"
+                 ForbiddenSeatListString="@forbiddenSeatString">
     </SelectTable>
 
-    <h5 class="font-monospace text-center m-4">
+    <h5 class=" text-center m-4">
         Step 2.
         <br />
         按下生成按鈕，系統會自動複製結果至剪貼簿。
@@ -29,14 +28,14 @@
         <div class="button" @onclick="_ReverseGenerate"><p>反生成</p></div>
     </div>
 
-    <h5 class="font-monospace text-center m-4">
+    <h5 class="text-center m-4">
         Step 3.
         <br />
         將結果貼至Google表單內。
     </h5>
 
 
-    <textarea class="resultstr font-monospace mx-auto" @bind="ResultString"></textarea>
+    <textarea class="resultstr mx-auto" @bind="ResultString"></textarea>
 
 
     @{

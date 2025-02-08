@@ -5,11 +5,13 @@
     </Found>
     <NotFound>
         <PageTitle>Not found</PageTitle>
-        <LayoutView Layout="@typeof(MainLayout)">
+        <CascadingValue Value="true" Name="IsNotScrollPage">
+                    <LayoutView Layout="@typeof(MainLayout)">
             <div class="vh-100">
 
                 <MyPage.Pages._404></MyPage.Pages._404>
             </div>
         </LayoutView>
+        </CascadingValue>
     </NotFound>
 </Router>

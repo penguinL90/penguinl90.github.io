@@ -13,6 +13,7 @@ public static class SeatListGenerator
 		writer.Write((short)seatList.Count);
 		foreach (SelectSeat seat in seatList)
 		{
+			if (seat.IsForbidden) continue;
 			writer.Write((short)-seat.Row);
 			writer.Write((short)-seat.Column);
 		}
@@ -22,7 +23,25 @@ public static class SeatListGenerator
 		return sb.ToString();
 	}
 
-	public static List<SeatBase> Parse(string str)
+    public static string Summon(List<SeatBase> seatList)
+    {
+        MemoryStream stream = new();
+        BinaryWriter writer = new(stream);
+        StringBuilder sb = new();
+        writer.Write("SeSy".ToCharArray());
+        writer.Write((short)seatList.Count);
+        foreach (SeatBase seat in seatList)
+        {
+            writer.Write((short)-seat.Row);
+            writer.Write((short)-seat.Column);
+        }
+        writer.Write("sEsY".ToCharArray());
+        byte[] ba = stream.ToArray();
+        foreach (byte b in ba) sb.Append(b.ToString("X2"));
+        return sb.ToString();
+    }
+
+    public static List<SeatBase> Parse(string str)
 	{
 		List<byte> bl = new(str.Length / 2);
 		for (int i = 0; i < str.Length; i += 2)

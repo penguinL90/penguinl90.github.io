@@ -1,5 +1,161 @@
-﻿<h3>SESYUrigenerator</h3>
+﻿@inject NavigationManager NavigationManager
+
+<PageTitle>座位系統 - 網址生成器</PageTitle>
+
+<div class="bg">
+    <div class="map">
+        <div class="ctrls">
+            <div class="ctrl">
+                <span>行·至多10行</span>
+                <input type="number" @bind="Row"/>
+            </div>
+            <div class="ctrl">
+                <span>列·至多10列</span>
+                <input type="number" @bind="Column" />
+            </div>
+            <div class="ctrl bctrl">
+                <span>表單網址</span>
+                <input type="url" @bind="FormUri"/>
+            </div>
+        </div>
+        <span class="podium">講桌·禁用座位選擇器</span>
+        <div class="tbc">
+            <table>
+                @for (int r = 1; r <= Row; ++r)
+                {
+                    <tr>
+                        @for (int c = 1; c <= Column; ++c)
+                        {
+                            <td>
+                                <UriSeatElement
+                                Seat="@(new(r, c))"
+                                EventRegister="EventRegister"
+                                EventUnRegister="EventUnRegister"
+                                AddElement="AddElement"
+                                RemoveElement="RemoveElement"></UriSeatElement>
+                            </td>
+                        }
+                    </tr>
+                }
+            </table>
+        </div>
+        <div class="summon">
+            <div class="ctrls lowerctrl">
+                <div class="ctrl bctrl">
+                    <span>網址後綴</span>
+                    <input class="user-select-all" type="url" @bind="query"/>
+                </div>
+                <div class="ctrl bctrl">
+                    <span>選擇網址</span>
+                    <input class="user-select-all" type="url" @bind="selecturi"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @code {
+    private string selecturi = "";
+    private string formuri = "";
+    private string query = "";
+    public string FormUri 
+    {
+        get => formuri;
+        set 
+        {
+            if (value != formuri)
+            {
+                formuri = value;
+                Summon();
+            }
+        }
+    }
 
+    private int row = 6;
+    private int column = 6;
+    public int Row
+    {
+        get => row;
+        set
+        {
+            switch (value)
+            {
+                case > 10:
+                    row = 10;
+                    break;
+                case < 1:
+                    row = 1;
+                    break;
+                default:
+                    row = value;
+                    break;
+            }
+            Summon();
+        }
+    }
+    public int Column
+    {
+        get => column;
+        set
+        {
+            switch (value)
+            {
+                case > 10:
+                    column = 10;
+                    break;
+                case < 1:
+                    column = 1;
+                    break;
+                default:
+                    column = value;
+                    break;
+            }
+            Summon();
+        }
+    }
+    private List<SeatBase> ForbiddenSeatList = [];
+
+    private event EventHandler<List<SeatBase>>? UpdateElement;
+
+    private void EventRegister(UriSeatElement s)
+    {
+        UpdateElement += s.OnUpdateElement;
+    }
+    private void EventUnRegister(UriSeatElement s)
+    {
+        UpdateElement -= s.OnUpdateElement;
+    }
+
+    private void AddElement(UriSeatElement s)
+    {
+        ForbiddenSeatList.Add(s.Seat);
+        UpdateElement?.Invoke(this, ForbiddenSeatList);
+        Summon();
+    } 
+
+    private void RemoveElement(UriSeatElement s)
+    {
+        ForbiddenSeatList.Remove(s.Seat);
+        UpdateElement?.Invoke(this, ForbiddenSeatList);
+        Summon();
+    }
+
+    private void Summon()
+    {
+        JsonObject jso = new JsonObject()
+            {
+                ["Fru"] = formuri,
+                ["Row"] = row,
+                ["Col"] = column,
+                ["Fss"] = SeatListGenerator.Summon(ForbiddenSeatList)
+            };
+        query = Convert.ToBase64String(Encoding.UTF8.GetBytes(jso.ToJsonString()));
+        selecturi = NavigationManager.BaseUri +"seating-system/selector/" + query;
+        StateHasChanged();
+    }
+
+    protected override void OnInitialized()
+    {
+        Summon();
+    }
 }

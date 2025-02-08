@@ -91,11 +91,18 @@ code {
     transition: transform 0.2s;
 }
 
+@media (hover: hover) {
     .hovereffect:hover {
         transform: scale(1.025);
     }
+}
+    
 
 .cursor-effect {
     position: relative;
     overflow: hidden;
+}
+
+html {
+    font-family: 'Noto Sans TC';
 }

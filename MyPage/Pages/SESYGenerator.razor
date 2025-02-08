@@ -1,5 +1,300 @@
-﻿<h3>SESYGenerator</h3>
+﻿@inject IJSRuntime JsRuntime
+@inject NavigationManager NavigationManager
+
+<PageTitle>座位系統 - 座位分配器</PageTitle>
+
+
+<div class="topgroup">
+	<div class="inputgroups">
+		<div class="inputgroups-title"><span>設定欄</span></div>
+		<div class="inputgroups-cell-col1">
+			<div class="inputgroup">
+				<span class="inputgroup-text">直行·至多10行</span>
+				<input class="inputgroup-input font-monospace" type="number" @bind="Row" />
+			</div>
+			<div class="inputgroup">
+				<span class="inputgroup-text">橫列·至多10列</span>
+				<input class="inputgroup-input font-monospace" type="number" @bind="Column" />
+			</div>
+			<div class="inputgroup">
+				<span class="inputgroup-text">種子碼</span>
+				<input class="inputgroup-input font-monospace" type="number" @bind="Seed" />
+			</div>
+			<div class="inputgroup">
+				<span class="inputgroup-text">禁用座位列表 <a href="/seating-system/selector/@(Param)">生成</a></span>
+				<input class="inputgroup-input font-monospace" type="text" @bind="ForbiddenSeatString" />
+			</div>
+			<div class="inputgroup">
+				<span class="inputgroup-text">使用權重</span>
+				<input class="inputgroup-input checkbx" type="checkbox" />
+			</div>
+		</div>
+		<div class="inputgroups-cell-col2">
+			<div class="inputgroup">
+				<span class="inputgroup-text text-center">輸入資料 格式<br/><code>"id:string seats:string [weight:double]"</code></span>
+				<textarea class="inputgroup-textarea font-monospace" @bind="InputData" />
+			</div>
+		</div>
+		<div class="summonbtn" @onclick="Summon">生成座位表</div>
+	</div>
+</div>
+
+<div class="mapborder" id="map">
+	<div class="map">
+		<div class="podium">講台</div>
+		<div class="map-container">
+			<table>
+				@foreach (List<DistributeSeat> distributeSeatRow in DistributeSeatList)
+				{
+					<tr>
+						@foreach (DistributeSeat distributeSeat in distributeSeatRow)
+						{
+							<td>
+								<div class="dsmaprect @(distributeSeat.IsForbidden ? "forbidden" : "")" id="@(distributeSeat.ToString())">
+									<span class="font-monospace">@distributeSeat.Row @distributeSeat.Column</span>
+									<p class="font-monospace">@(distributeSeat.IsForbidden ? "禁用" : distributeSeat.Student?.ID)</p>
+								</div>
+							</td>
+						}
+					</tr>
+				}
+			</table>
+		</div>
+	</div>
+	<div class="rightpanel">
+		<div class="log" id="logl">
+			<ul>
+				@for (int i = 0; i < LogList.Count; ++i)
+				{
+					<li class="font-monospace">
+						@LogList[i]
+						@if (i != LogList.Count - 1)
+						{
+							<hr />
+						}
+					</li>
+				}
+			</ul>
+		</div>
+		<textarea>
+			@OutputString
+		</textarea>
+	</div>
+
+</div>
 
 @code {
+	[Parameter]
+	public string Param { get; set; }
 
+	private int row = 6;
+	private int column = 6;
+
+	public int Row
+	{
+		get => row;
+		set
+		{
+			if (value > 10) row = 10;
+			else if (value <= 0) row = 1;
+			else row = value;
+		}
+	}
+	public int Column
+	{
+		get => column;
+		set
+		{
+			if (value > 10) column = 10;
+			else if (value <= 0) column = 1;
+			else column = value;
+		}
+	}
+
+	private long? Seed { get; set; }
+	private string InputData { get; set; } = "";
+	private List<List<DistributeSeat>> DistributeSeatList { get; set; }
+	private List<string> LogList { get; set; } = [];
+	private string ForbiddenSeatString { get; set; } = "";
+	private bool IsUsingWeight = false;
+
+
+	private CancellationTokenSource cancellationTokenSource = new();
+	private CancellationToken cancellationToken;
+
+	private string OutputString = "";
+
+	private void MapCreate()
+	{
+		List<SeatBase> forbiddenSeatList;
+
+		try 
+		{
+			forbiddenSeatList = SeatListGenerator.Parse(ForbiddenSeatString);
+		}
+		catch
+		{
+			forbiddenSeatList = [];
+		}
+
+		DistributeSeatList = [];
+		for (int r = 1; r <= Row; ++r)
+		{
+			List<DistributeSeat> distributeSeatRow = [];
+			for (int c = 1; c <= Column; ++c)
+			{
+				DistributeSeat distributeSeat = new(r, c, null);
+				if (forbiddenSeatList.Contains(distributeSeat))
+				{
+					distributeSeat.IsForbidden = true;
+				}
+				distributeSeatRow.Add(distributeSeat);
+			}
+			DistributeSeatList.Add(distributeSeatRow);
+		}
+	}
+
+	private void ScrollToRect(string rect) => JsRuntime.InvokeVoidAsync("scrollrect", rect);
+
+	private void PopUpRect(string rect) => JsRuntime.InvokeVoidAsync("popuprect", rect);
+
+	private void ClearLog() => LogList.Clear();
+
+	private async void WriteLog(string message)
+	{
+		LogList.Add($"[{DateTime.Now.ToString("hh:mm:ss")}]:\n{message}");
+		await JsRuntime.InvokeVoidAsync("logscrollupdate");
+	}
+
+	private void StateChanged() => StateHasChanged();
+
+	protected override void OnInitialized()
+	{
+		cancellationToken = cancellationTokenSource.Token;
+
+		if (!string.IsNullOrEmpty(Param)) 
+		{
+			string param = Encoding.UTF8.GetString(Convert.FromBase64String(Param));
+			JsonObject jsoparam = JsonNode.Parse(param)!.AsObject();
+			if (!(jsoparam.TryGetPropertyValue("Row", out JsonNode? jsonRow) && jsonRow!.AsValue().TryGetValue<int>(out row)))
+				row = 6;
+			if (!(jsoparam.TryGetPropertyValue("Col", out JsonNode? jsonCol) && jsonCol!.AsValue().TryGetValue<int>(out column)))
+				column = 6;
+			if ((jsoparam.TryGetPropertyValue("Fss", out JsonNode? jsonFss) && jsonFss!.AsValue().TryGetValue<string>(out string _forbiddenSeatString)))
+				ForbiddenSeatString = _forbiddenSeatString;
+		}
+
+		MapCreate();
+	}
+
+	private async void Summon()
+	{
+		if (InputData == null || InputData == "") return;
+		if (Row == 0 || Column == 0) return;
+		cancellationTokenSource.Cancel();
+		cancellationTokenSource = new();
+		cancellationToken = cancellationTokenSource.Token;
+		List<Student> students = [];
+
+		await Task.Run(async () =>
+		{
+			#region data_process
+
+			if (Seed is null)
+			{
+				Seed = (int)(DateTime.UtcNow.ToFileTimeUtc() % int.MaxValue);
+			}
+			Random random = new((int)Seed);
+			ClearLog();
+			using StringReader reader = new(InputData);
+			int maxWishCount = 0;
+			string? readstr;
+			while ((readstr = reader.ReadLine()) != null)
+			{
+				string[] spstr = readstr.Split('\t');
+				double weight = 1;
+				List<SeatBase> seatList;
+				try
+				{
+					if (IsUsingWeight)
+					{
+						weight = double.Parse(spstr[2]);
+					}
+					seatList = SeatListGenerator.Parse(spstr[1]);
+				}
+				catch (Exception e)
+				{
+					WriteLog($"{spstr[0]}的資料在剖析時遇到了一些問題: {e.Message}");
+					seatList = [];
+				}
+				Student student = new(spstr[0], weight, seatList);
+
+				maxWishCount = Math.Max(maxWishCount, student.WishList.Count);
+				if (students.Count == 0)
+				{
+					students.Add(student);
+				}
+				else
+					students.Insert(random.Next() % students.Count, student);
+			}
+			#endregion
+
+			#region seatMap_create
+			MapCreate();
+			StateHasChanged();
+			await JsRuntime.InvokeVoidAsync("scroll", "map");
+			await Task.Delay(1000);
+			#endregion
+			await Algorithm.Model1(DistributeSeatList,
+									students,
+									maxWishCount,
+									StateChanged,
+									WriteLog,
+									ScrollToRect,
+									PopUpRect);
+			StateHasChanged();
+
+			#region write_to_result
+			StringBuilder stringBuilder = new();
+			stringBuilder.AppendLine("反向座位表");
+			for (int r = DistributeSeatList.Count - 1; r >= 0; --r)
+			{
+				List<DistributeSeat> seats = DistributeSeatList[r];
+				for (int c = seats.Count - 1; c >= 0; --c)
+				{
+					DistributeSeat mapSeat = seats[c];
+					if (mapSeat.Student != null)
+					{
+						stringBuilder.Append(mapSeat.Student.ID);
+					}
+					if (c != 0)
+					{
+						stringBuilder.Append("\t\t");
+					}
+				}
+				stringBuilder.AppendLine();
+			}
+			stringBuilder.AppendLine("一般座位表");
+			for (int r = 0; r < DistributeSeatList.Count; ++r)
+			{
+				List<DistributeSeat> seats = DistributeSeatList[r];
+				for (int c = 0; c < seats.Count; ++c)
+				{
+					DistributeSeat mapSeat = seats[c];
+					if (mapSeat.Student != null)
+					{
+						stringBuilder.Append(mapSeat.Student.ID);
+					}
+					if (c != seats.Count - 1)
+					{
+						stringBuilder.Append("\t\t");
+					}
+				}
+				stringBuilder.AppendLine();
+			}
+			OutputString = stringBuilder.ToString();
+			StateHasChanged();
+			#endregion
+		}, cancellationToken);
+	}
 }

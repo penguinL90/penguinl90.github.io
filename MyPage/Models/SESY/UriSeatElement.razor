@@ -1,0 +1,46 @@
+﻿@implements IDisposable
+<div class="seatrect @(IsChose ? "chose" : "")" @onclick="OnClick">
+    <span class="font-monospace">@Seat.Row @Seat.Column</span>
+</div>
+
+@code {
+    [Parameter]
+    public SeatBase Seat { get; set; }
+    [Parameter]
+    public Action<UriSeatElement> EventRegister { get; set; }
+    [Parameter]
+    public Action<UriSeatElement> EventUnRegister { get; set; }
+    [Parameter]
+    public Action<UriSeatElement> AddElement { get; set; }
+    [Parameter]
+    public Action<UriSeatElement> RemoveElement { get; set; }
+
+    private bool IsChose = false;
+
+    public void Dispose()
+    {
+        EventUnRegister(this);
+    }
+    protected override void OnInitialized()
+    {
+        EventRegister(this);
+    }
+
+    public void OnUpdateElement(object? sender, List<SeatBase> e)
+    {
+        if (e.Contains(Seat))
+        {
+            IsChose = true;
+        }
+        else
+        {
+            IsChose = false;
+        }
+    }
+
+    private void OnClick()
+    {
+        if (IsChose) RemoveElement(this);
+        else AddElement(this);
+    }
+}
