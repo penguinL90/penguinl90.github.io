@@ -4,7 +4,7 @@
 @inject LayoutSetting LayoutSetting
 
 <div class="wholecontainer">
-    <header class="@(IsNotScrollPage ? "heaaad" : "")" style="visibility: @(IsNoNav ? "collapse" : "visible")">
+    <header class="@(IsNotScrollPage ? "heaaad" : "")" style="@(IsNoNav ? "display: none;" : "")">
         <nav class="navbar navbar-expand-sm py-4"
         style="background-color: #45616A; top: -1px">
             <div class="container-fluid">
@@ -47,7 +47,7 @@
         @Body
     </CascadingValue>
 
-    <footer class="@(IsNotScrollPage ? "fooot" : "")" style="background-color: #45616A; bottom: 0; height: 7.5rem; visibility: @(IsNoNav ? "collapse" : "visible")">
+    <footer class="@(IsNotScrollPage ? "fooot" : "")" style="background-color: #45616A; bottom: 0; height: 7.5rem; @(IsNoNav ? "display: none;" : "")">
         <div class="container h-100 d-flex flex-column justify-content-evenly">
             <p class="text-center m-0">
                 2025 penguinL90
