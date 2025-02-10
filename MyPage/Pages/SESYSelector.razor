@@ -37,6 +37,11 @@
 
     <textarea class="resultstr mx-auto" @bind="ResultString"></textarea>
 
+    <h5 class=" text-center m-4">
+        若表單無法顯示
+        <br />
+        <a href="@(frameuri)">點這裡來填放</a>
+    </h5>
 
     @{
         if (string.IsNullOrEmpty(frameuri))
@@ -47,6 +52,11 @@
         }
         else
         {
+            <h5 class=" text-center m-4">
+                若表單無法顯示
+                <br />
+                <a href="@(frameuri)">點這裡來填放</a>
+            </h5>
             <iframe class="frame mx-auto"
             src="@frameuri"
             frameborder="0"
