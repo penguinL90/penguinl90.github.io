@@ -2,13 +2,13 @@
 
 @implements IDisposable
 
-<div class=" cell @CssClass1 @CssClass2" @onclick="OnClick">
-    <p class="">
+<div class="font-monospace cell @CssClass1 @CssClass2" @onclick="OnClick">
+    <p class="font-monospace">
         @Seat.Row @Seat.Column
     </p>
     <div class="ani-container" id="@($"Ani-{Seat}")">
-        <span class="@newspan">@newtxt</span>
-        <span class="@oldspan">@oldtxt</span>
+        <span class="font-monospace @newspan">@newtxt</span>
+        <span class="font-monospace @oldspan">@oldtxt</span>
     </div>
 </div>
 

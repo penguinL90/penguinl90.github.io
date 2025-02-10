@@ -31,7 +31,7 @@
 		</div>
 		<div class="inputgroups-cell-col2">
 			<div class="inputgroup">
-				<span class="inputgroup-text text-center">輸入資料 格式<br/><code>"id:string seats:string [weight:double]"</code></span>
+				<span class="inputgroup-text text-center">輸入資料 格式<br/><code>"id:string\tseats:string\t[weight:double]\r\n"</code></span>
 				<textarea class="inputgroup-textarea font-monospace" @bind="InputData" />
 			</div>
 		</div>
@@ -76,7 +76,7 @@
 				}
 			</ul>
 		</div>
-		<textarea>
+		<textarea class="font-monospace">
 			@OutputString
 		</textarea>
 	</div>

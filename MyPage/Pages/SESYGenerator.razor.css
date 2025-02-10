@@ -254,6 +254,8 @@
         border-radius: 0.5rem;
         border: 1px white solid;
         resize: none;
+        scrollbar-width: none;
+        tab-size: 3;
     }
 
 @media (max-width: 1329.5px) {
