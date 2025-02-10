@@ -1,16 +1,18 @@
 ﻿@inherits LayoutComponentBase
+@implements IDisposable
 @inject NavigationManager NavigationManager
+@inject LayoutSetting LayoutSetting
 
 <div class="wholecontainer">
-    <header class ="@(IsNotScrollPage ? "heaaad" : "")">
+    <header class="@(IsNotScrollPage ? "heaaad" : "")" style="visibility: @(IsNoNav ? "collapse" : "visible")">
         <nav class="navbar navbar-expand-sm py-4"
-             style="background-color: #45616A; top: -1px">
+        style="background-color: #45616A; top: -1px">
             <div class="container-fluid">
                 <div class="navbar-brand">@(string.IsNullOrEmpty(title) ? "penguinL90 - 404" : title)</div>
                 <button class="navbar-toggler"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navcolcont">
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navcolcont">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navcolcont">
@@ -20,11 +22,11 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle"
-                               href="#"
-                               id="navbarDropdown"
-                               role="button"
-                               data-bs-toggle="dropdown"
-                               aria-expanded="false">座位系統</a>
+                            href="#"
+                            id="navbarDropdown"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false">座位系統</a>
                             <ul class="dropdown-menu">
                                 <li><a href="seating-system/" class="dropdown-item">主頁</a></li>
                                 <li><a href="seating-system/selector" class="dropdown-item">座位選擇器</a></li>
@@ -32,7 +34,7 @@
                                 <li><a href="seating-system/urigenerator" class="dropdown-item">網址生成器</a></li>
                             </ul>
                         </li>
-@*                         <li class="nav-item">
+                        @*                         <li class="nav-item">
                             <a class="nav-link" href="/dotword-generator">點點字生成器</a>
                         </li> *@
                     </ul>
@@ -45,7 +47,7 @@
         @Body
     </CascadingValue>
 
-    <footer class="@(IsNotScrollPage ? "fooot" : "")" style="background-color: #45616A; bottom: 0; height: 7.5rem;">
+    <footer class="@(IsNotScrollPage ? "fooot" : "")" style="background-color: #45616A; bottom: 0; height: 7.5rem; visibility: @(IsNoNav ? "collapse" : "visible")">
         <div class="container h-100 d-flex flex-column justify-content-evenly">
             <p class="text-center m-0">
                 2025 penguinL90
@@ -64,6 +66,9 @@
     [CascadingParameter(Name = "IsNotScrollPage")]
     public bool IsNotScrollPage { get; set; } = false;
 
+    private bool IsNoNav;
+    private bool Is100vh;
+
     private string _title;
     public string title 
     {
@@ -75,8 +80,21 @@
             StateHasChanged();
         }
     }
+
     protected override void OnInitialized()
     {
         base.OnInitialized();
+        LayoutSetting.LayoutSettingChanged += GetData;
+    }
+
+    private void GetData()
+    {
+        LayoutSetting.GetData(out Is100vh, out IsNoNav);
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        LayoutSetting.LayoutSettingChanged -= GetData;
     }
 }
