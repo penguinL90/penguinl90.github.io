@@ -24,6 +24,7 @@
 .resultstr {
     border: 1px solid;
     text-align: center;
+    max-height: 25vh;
     overflow-y: auto;
     overflow-wrap: anywhere;
     scrollbar-width: none;
