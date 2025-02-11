@@ -1,0 +1,4 @@
+/home/runner/work/penguinl90.github.io/penguinl90.github.io/output/wwwroot/img/cursoroverlay.svg
+/home/runner/work/penguinl90.github.io/penguinl90.github.io/output/wwwroot/img/mainpageimg.png
+/home/runner/work/penguinl90.github.io/penguinl90.github.io/output/libman.json
+/home/runner/work/penguinl90.github.io/penguinl90.github.io/output/web.config

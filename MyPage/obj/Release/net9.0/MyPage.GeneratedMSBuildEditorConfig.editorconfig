@@ -1,0 +1,89 @@
+is_global = true
+build_property.EnableAotAnalyzer = 
+build_property.EnableSingleFileAnalyzer = 
+build_property.EnableTrimAnalyzer = false
+build_property.IncludeAllContentForSelfExtract = 
+build_property.TargetFramework = net9.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = browser
+build_property.RootNamespace = MyPage
+build_property.RootNamespace = MyPage
+build_property.ProjectDir = /home/runner/work/penguinl90.github.io/penguinl90.github.io/MyPage/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = false
+build_property.RazorLangVersion = 9.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = /home/runner/work/penguinl90.github.io/penguinl90.github.io/MyPage
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 9.0
+build_property.EnableCodeStyleSeverity = 
+
+[/home/runner/work/penguinl90.github.io/penguinl90.github.io/MyPage/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/runner/work/penguinl90.github.io/penguinl90.github.io/MyPage/Pages/DWGE.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRFdHRS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/runner/work/penguinl90.github.io/penguinl90.github.io/MyPage/Pages/PageBase.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUGFnZUJhc2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/runner/work/penguinl90.github.io/penguinl90.github.io/MyPage/Pages/SESY.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU0VTWS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/runner/work/penguinl90.github.io/penguinl90.github.io/MyPage/Pages/SESYIntro.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU0VTWUludHJvLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/runner/work/penguinl90.github.io/penguinl90.github.io/MyPage/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/runner/work/penguinl90.github.io/penguinl90.github.io/MyPage/Layout/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0L01haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-45wbp35udq
+
+[/home/runner/work/penguinl90.github.io/penguinl90.github.io/MyPage/Models/SESY/SelectTable.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kZWxzL1NFU1kvU2VsZWN0VGFibGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-nbq693dhh9
+
+[/home/runner/work/penguinl90.github.io/penguinl90.github.io/MyPage/Models/SESY/SelectTableCell.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kZWxzL1NFU1kvU2VsZWN0VGFibGVDZWxsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-sj2dt25s6d
+
+[/home/runner/work/penguinl90.github.io/penguinl90.github.io/MyPage/Models/SESY/UriSeatElement.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kZWxzL1NFU1kvVXJpU2VhdEVsZW1lbnQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-se8p783obs
+
+[/home/runner/work/penguinl90.github.io/penguinl90.github.io/MyPage/Pages/404.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvNDA0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-doz1ze59mp
+
+[/home/runner/work/penguinl90.github.io/penguinl90.github.io/MyPage/Pages/Home.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSG9tZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-4e3xte2knv
+
+[/home/runner/work/penguinl90.github.io/penguinl90.github.io/MyPage/Pages/SESYGenerator.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU0VTWUdlbmVyYXRvci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-uvmtzdkvc2
+
+[/home/runner/work/penguinl90.github.io/penguinl90.github.io/MyPage/Pages/SESYSelector.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU0VTWVNlbGVjdG9yLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-w3aghlr0ta
+
+[/home/runner/work/penguinl90.github.io/penguinl90.github.io/MyPage/Pages/SESYSelectorEmbed.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU0VTWVNlbGVjdG9yRW1iZWQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-ild3ypury2
+
+[/home/runner/work/penguinl90.github.io/penguinl90.github.io/MyPage/Pages/SESYUrigenerator.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvU0VTWVVyaWdlbmVyYXRvci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-7sduz3adny

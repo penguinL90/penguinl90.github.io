@@ -1,0 +1,148 @@
+.cell[b-sj2dt25s6d] {
+    aspect-ratio: 1;
+    justify-content: space-evenly;
+    display: flex;
+    flex-flow: column;
+    background-color: #45616A;
+    transition: background-color 0.25s, transform 0.25s;
+}
+
+.chose[b-sj2dt25s6d] {
+    background-color: #3E574F;
+}
+
+
+.deactived[b-sj2dt25s6d] {
+    background-color: #5A5A5A;
+}
+
+p[b-sj2dt25s6d] {
+    position: relative;
+    margin: 0;
+    text-align: center;
+    user-select: none;
+} 
+
+.ani-container[b-sj2dt25s6d] {
+    position: relative;
+    width: 100%;
+    user-select: none;
+    overflow: hidden;
+}
+
+span[b-sj2dt25s6d] {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+
+.popin-up[b-sj2dt25s6d] {
+    animation: r_popin-b-sj2dt25s6d 0.2s forwards;
+}
+
+.popin-down[b-sj2dt25s6d] {
+    animation: popin-b-sj2dt25s6d 0.2s forwards;
+}
+
+.popout-up[b-sj2dt25s6d] {
+    animation: popout-b-sj2dt25s6d 0.2s forwards;
+}
+
+.popout-down[b-sj2dt25s6d] {
+    animation: r_popout-b-sj2dt25s6d 0.2s forwards;
+}
+
+
+@media (hover: hover) {
+    .actived:hover[b-sj2dt25s6d] {
+        transform: scale(1.05);
+    }
+}
+
+@media (min-width: 600.5px) {
+    .cell[b-sj2dt25s6d] {
+        width: 5rem;
+        margin: 0.25rem;
+        border-radius: 0.5rem;
+    }
+
+    p[b-sj2dt25s6d] {
+        font-size: 1.15rem;
+    }
+
+    .ani-container[b-sj2dt25s6d] {
+        height: 2rem;
+    }
+
+    span[b-sj2dt25s6d] {
+        font-size: 1.28rem;
+    }
+}
+
+@media (max-width: 600.5px) {
+    .cell[b-sj2dt25s6d] {
+        width: 3.75rem;
+        margin: 0.1875rem;
+        border-radius: 0.375rem;
+    }
+
+    p[b-sj2dt25s6d] {
+        font-size: 0.8625em;
+    }
+
+    .ani-container[b-sj2dt25s6d] {
+        height: 1.4rem;
+    }
+
+    span[b-sj2dt25s6d] {
+        font-size: 0.9rem;
+    }
+}
+
+@keyframes popin-b-sj2dt25s6d {
+    from {
+        transform: translateY(75%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+}
+
+@keyframes r_popin-b-sj2dt25s6d {
+    from {
+        transform: translateY(-75%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes popout-b-sj2dt25s6d {
+    from {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(-75%);
+        opacity: 0;
+    }
+}
+
+@keyframes r_popout-b-sj2dt25s6d {
+    from {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(75%);
+        opacity: 0;
+    }
+}
