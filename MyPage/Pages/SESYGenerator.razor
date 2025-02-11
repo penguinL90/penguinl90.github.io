@@ -1,4 +1,4 @@
-﻿@inject IJSRuntime JsRuntime
+@inject IJSRuntime JsRuntime
 @inject NavigationManager NavigationManager
 
 <PageTitle>座位系統 - 座位分配器</PageTitle>
@@ -31,7 +31,7 @@
 		</div>
 		<div class="inputgroups-cell-col2">
 			<div class="inputgroup">
-				<span class="inputgroup-text text-center">輸入資料 格式<br/><code>"id:string\tseats:string\t[weight:double]\r\n"</code></span>
+				<span class="inputgroup-text text-center">輸入資料 格式<br/><code>"id:string\tseats:string\t<br/>[weight:double]\r\n"</code></span>
 				<textarea class="inputgroup-textarea font-monospace" @bind="InputData" />
 			</div>
 		</div>
